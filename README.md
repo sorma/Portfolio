@@ -1,8 +1,8 @@
 # Portfolio di Francesco Sormani
 
-Portfolio bilingue (italiano e inglese) realizzato con React, TypeScript, Vite, React Router e CSS Modules. I contenuti sono locali: nessun backend, analytics o servizio esterno viene chiamato dal sito.
+Portfolio bilingue italiano/inglese realizzato con React, TypeScript, Vite, React Router e CSS Modules. L'interfaccia usa un tema scuro, una hero predisposta per la fotografia personale e schede progetto generate da un catalogo centralizzato. Non sono richiesti backend, analytics o servizi esterni.
 
-## Avvio e controlli
+## Avvio
 
 Richiede Node.js 22 o successivo.
 
@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Aprire l'indirizzo mostrato da Vite, normalmente `http://localhost:5173`.
+Altri controlli disponibili:
 
 ```sh
 npm run lint
@@ -20,30 +20,49 @@ npm run build
 npm run preview
 ```
 
-In PowerShell, se l'esecuzione di `npm.ps1` è bloccata, usare `npm.cmd` al posto di `npm`.
+## Fotografia della hero
 
-## Struttura e aggiornamenti
+Inserire la fotografia personale in `public/images/profile-hero.jpg`. La hero usa `object-fit: cover`; per regolare il ritaglio desktop e mobile modificare `--hero-object-position` e `--hero-object-position-mobile` in `src/styles/global.css`. La pagina mostra un fondale tipografico finché il file non viene aggiunto. Non è inclusa alcuna foto stock o generata.
 
+## Catalogo dei progetti
+
+`src/data/projects.ts` contiene `projectCatalog`, l'elenco unico dei progetti e i contenuti italiani/inglesi: descrizione, contesto, soluzione, funzionalità, architettura, scelte tecniche, stato, linguaggi, tecnologie e collegamenti. Ogni progetto ha il campo `group` per la categoria personale o universitaria. Per aggiungere una scheda, creare uno slug univoco e aggiungere i dati di lingua e categoria; il carosello e il percorso `/progetti/:slug` vengono generati dal catalogo. Le competenze in `src/data/copy.ts` collegano le tecnologie alle schede.
+
+## Audit GitHub e inventario
+
+Il profilo è stato enumerato tramite l'API pubblica con `per_page=100` (14 repository, tutte non fork e non archiviate); le copie temporanee per la lettura di README, manifest, struttura e sorgenti sono state conservate fuori dal repository del portfolio.
+
+| Repository                      | Classificazione                | Presenza nel portfolio   |
+| ------------------------------- | ------------------------------ | ------------------------ |
+| ArredamentiSormani              | Sito web                       | Sì                       |
+| Chalet-Time                     | Applicazione Android           | Sì                       |
+| ChaletGabriele                  | Sito web multilingua           | Sì                       |
+| CipCalor                        | Sito web online                | Sì                       |
+| ColabNotebooks                  | Notebook di analisi dati       | Sì, Bank Marketing       |
+| CostoPiatto                     | Applicazione web               | Sì                       |
+| GestionaleSormani               | Sistema gestionale web         | Sì                       |
+| mot-big-data-analysis           | Progetto di analisi dati       | Sì                       |
+| Portfolio                       | Portfolio personale            | È il repository corrente |
+| prog1bis-metodi-main            | Progetto universitario         | Sì, solutori iterativi   |
+| prog2-metodi-main               | Progetto universitario         | Sì, DCT e compressione   |
+| progetto-architetture-dati-main | Ricerca/sperimentazione RAG    | Sì                       |
+| RistoranteApp                   | Applicazione Android           | Sì                       |
+| TrackWallet-master              | Applicazione Android di gruppo | Sì                       |
+
+I 13 progetti esterni al portfolio hanno una pagina di dettaglio e sono divisi in sei progetti universitari (TrackWallet, Sistema RAG, Analisi Big Data MOT, DCT e compressione, solutori iterativi, Bank Marketing) e sette progetti personali. Chalet-Time è incluso dopo aver consultato README, guida architetturale e codice. `mot-big-data-analysis` non ha un README descrittivo: la scheda riassume le pipeline presenti nel sorgente e segnala questo limite. Nei progetti universitari e di gruppo il portfolio descrive il repository senza attribuire contributi individuali non documentati. Le schede usano copertine grafiche; TrackWallet include una schermata dell'app. Solo CipCalor è presentato come sito attualmente online.
+
+## Struttura
+
+- `src/data/projects.ts`: catalogo e contenuti dei progetti.
+- `src/data/copy.ts`: testi e competenze nelle due lingue.
 - `src/data/profile.ts`: nome, email e profili pubblici.
-- `src/data/site.ts`: origine pubblica opzionale letta da `VITE_SITE_URL` durante la build.
-- `src/data/projects.ts`: progetti, link, tecnologie, descrizioni IT/EN e dettagli delle pagine. Per aggiungere un progetto in evidenza, inserire un oggetto in `featuredProjects` con uno `slug` univoco; la route `/progetti/:slug` viene generata dai dati. I progetti compatti sono in `otherProjects`.
-- `src/data/copy.ts`: testi dell'interfaccia nelle due lingue. Aggiungere sempre entrambe le versioni.
-- `src/App.tsx`: layout, pagine e navigazione.
-- `src/App.module.css` e `src/styles/global.css`: stili, variabili CSS e layout responsive.
-- `public/images`: immagini delle copertine. Inserire un file ottimizzato e aggiornare `image` e `imageAlt` nel progetto; senza immagine viene usata una copertina grafica.
+- `src/App.tsx`: layout, navigazione, sezioni e pagina di dettaglio.
+- `src/App.module.css`: componenti visivi e layout responsive.
+- `src/styles/global.css`: palette, tipografia e preferenze globali.
+- `public/images`: immagini di progetto e fotografia hero da aggiungere.
 
-La lingua predefinita è l'italiano. La scelta viene salvata in `localStorage` e aggiorna l'attributo `lang` dell'HTML. Se in futuro sarà disponibile un CV, aggiungere un file approvato in `public/` e un link tradotto in `copy.ts` e nella sezione contatti. Non è presente alcun CV nel progetto attuale.
+La lingua italiana è predefinita; la scelta viene mantenuta in `localStorage`. La navigazione e i reveal rispettano `prefers-reduced-motion`.
 
-## Fonti e contenuti da completare
+## SEO e pubblicazione
 
-Sono state consultate le dieci repository elencate nel brief, tramite copie locali temporanee: README, dipendenze, struttura e file di codice rilevanti. Le quattro schede principali si basano su [ArredamentiSormani](https://github.com/sorma/ArredamentiSormani), [RistoranteApp](https://github.com/sorma/RistoranteApp), [progetto-architetture-dati-main](https://github.com/sorma/progetto-architetture-dati-main) e [CipCalor](https://github.com/sorma/CipCalor). Le immagini web nelle copertine provengono dalle rispettive repository e sono fotografie di progetto, non screenshot dell'interfaccia. Le copertine Android e RAG sono grafiche illustrative.
-
-Per i progetti di gruppo, **il contributo personale preciso di Francesco non è documentato**. Le pagine pubbliche descrivono il progetto nel suo insieme senza attribuirgli singole funzioni. Prima di aggiungere dettagli personali, raccogliere una conferma su responsabilità e parti realizzate, soprattutto per RistoranteApp, Sistema RAG, TrackWallet, Chalet Gabriele e i lavori di calcolo scientifico. I README dei progetti di metodi numerici indicano Francesco tra gli autori, senza ripartire i contributi. RistoranteApp non ha un README; i dettagli mostrati derivano dal codice. La repository Chalet-Time contiene solo un README minimale e codice Android non sufficientemente documentato per una descrizione pubblica affidabile: per questo non è nel portfolio.
-
-Restano da confermare eventuali date di laurea, informazioni personali aggiuntive, contributi individuali e diritti di riutilizzo delle fotografie prima della pubblicazione. La repository Arredamenti Sormani documenta una configurazione Cloudflare, ma non viene presentata come demo attualmente online. L'unico collegamento a un sito pubblico è quello di CipCalor.
-
-## Pubblicazione statica e SEO
-
-`npm run build` genera `dist/`. Pubblicare il contenuto su un hosting statico e configurare il fallback di tutte le route verso `/index.html`, mantenendo la normale consegna degli asset esistenti. È necessario per aprire direttamente URL come `/progetti/ristorante-app`. Su Netlify si può usare una regola `/* /index.html 200`; su altri host configurare la riscrittura equivalente.
-
-Il dominio del portfolio non è ancora noto. Quando sarà disponibile, impostare `VITE_SITE_URL` durante la build (vedere `.env.example`) su un'origine HTTPS senza slash finale. Il sito aggiunge allora un canonical per il percorso corrente. Titolo, descrizione e canonical sono gestiti dal client: essendo una SPA, il sorgente HTML iniziale non contiene metadati specifici delle singole pagine. Alcuni crawler e anteprime social potrebbero quindi vedere solo i metadati generici. Per SEO completo delle pagine progetto, introdurre prerendering o rendering server quando si sceglierà l'hosting.
+Impostare `VITE_SITE_URL` in fase di build quando il dominio del portfolio è disponibile. I metadati specifici di pagina vengono aggiornati dal client; essendo una SPA, per generare anteprime social specifiche per ciascun progetto servirà aggiungere prerendering o rendering server. In produzione, configurare l'hosting per riscrivere le route `/progetti/*` verso `index.html`.
